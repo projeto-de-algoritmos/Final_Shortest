@@ -41,8 +41,17 @@ class Graph {
   }
 
   shortestPath(destiny) {
-    // iniciar com infinito e zerar somente a coluna destiny
-    // loops para verificar os menores caminhos
+    // iniciar com infinito e zerar somente a coluna do nó destiny
+
+    for (let i = 0; i < this.totalNodes; ++i) {
+      this.memoization[i] = {}; // criando objeto para cada iteração
+      for (let vertex in this.vertexs) {
+        this.memoization[i][vertex] = Number.MAX_SAFE_INTEGER; // recebendo valor "infinito"
+      }
+      this.memoization[i][destiny] = 0; // zerando a coluna do nó procurado, pois para chegar a ele precisamos de 0 arestas.
+    }
+
+    // loops para verificar os menores caminhos (logica do algoritmo)
     // find solution
   }
 }
