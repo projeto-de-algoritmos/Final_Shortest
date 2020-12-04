@@ -154,7 +154,9 @@ export default class Graph {
       edges: edges,
     };
 
-    return dict;
+    console.log(this.vertexs);
+
+    return { dict: dict, vertexs: this.vertexs };
   }
 
   shortestPath(origin, destiny) {
