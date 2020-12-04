@@ -11,9 +11,8 @@ export const Container = styled.div`
 export const Header = styled.div`
   height: 10%;
   width: 100%;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  vertical-align: middle;
   background: #000;
 `;
 export const Body = styled.div`
@@ -31,6 +30,7 @@ export const Menu = styled.div`
   align-items: center;
   flex-direction: column;
   button {
+    margin: 15px;
     padding: 10px;
     height: 8%;
     width: 60%;
@@ -47,11 +47,23 @@ export const Menu = styled.div`
   }
 `;
 export const Text = styled.p`
-  margin-bottom: 5px;
   font-size: 30px;
   color: #fff;
+  text-align: center;
+`;
+export const SubText = styled.p`
+  margin-bottom: 5px;
+  font-size: 20px;
+  color: #ff0000;
   padding: 4px;
   text-align: center;
+`;
+export const Conditional = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 export const Bottom = styled.div`
   height: 10%;
@@ -60,4 +72,46 @@ export const Bottom = styled.div`
   align-items: center;
   flex-direction: column;
   background: #000;
+`;
+
+export const FormContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    button {
+      margin: 15px;
+      padding: 10px;
+      height: 8%;
+      width: 60%;
+      background: linear-gradient(-90deg, #fff, #000);
+      font-weight: bold;
+      color: #fff;
+      border: 0;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background 0.2s;
+      &:hover {
+        background: ${darken(0.03, "#3b9eff")};
+      }
+    }
+`;
+
+export const Input = styled.input`
+  background: rgba(0, 0, 0, 0.1);
+  border: 1;
+  border-color: #fff;
+  border-radius: 4px;
+  height: 44px;
+  padding: 0 15px;
+  color: #fff;
+  margin: 0 0 10px;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
 `;
