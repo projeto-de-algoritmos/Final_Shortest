@@ -6,8 +6,8 @@
   },
 
   "autoResize": true,
-  "height": "90%",
-  "width": "90%",
+  "height": "95%",
+  "width": "100%",
   "nodes": {
     "borderWidth": 3,
     "size": 10,
@@ -15,7 +15,7 @@
       "border": "#000",
       "background": "#FFF",
       "highlight": {
-        "border": "#000",
+        "border": "#91c095",
         "background": "#91c095"
       }
     },

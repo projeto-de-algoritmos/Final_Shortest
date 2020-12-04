@@ -302,11 +302,11 @@ export default class Graph {
     let aux = origin;
     if (aux == destiny) {
       console.log("Destino e origem iguais");
-      return;
+      return -2;
     }
     if (!this.sucessor.hasOwnProperty(origin)) {
       console.log("Não existe um caminho entre ", origin, " e ", destiny);
-      return;
+      return -1;
     }
     let path = [];
     while (aux != destiny) {
