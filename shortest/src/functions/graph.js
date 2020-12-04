@@ -41,12 +41,19 @@ export default class Graph {
       this.vertexs[destiny]["degree"]++;
     }
   }
+
+  test() {
+    this.addVertex("s");
+    this.addVertex("2");
+    this.addVertex("3");
+    this.addVertex("4");
+  }
   exampleOne() {
-    this.vertexs = {};
-    this.memoization = {};
-    this.totalNodes = 0;
-    this.sucessor = {};
-    this.solutionSet = {};
+    // this.vertexs = {};
+    // this.memoization = {};
+    // this.totalNodes = 0;
+    // this.sucessor = {};
+    // this.solutionSet = {};
 
     this.addVertex("s");
     this.addVertex("2");
@@ -101,8 +108,9 @@ export default class Graph {
       nodes: nodes,
       edges: edges,
     };
+    // console.log(this.vertexs);
 
-    return dict;
+    return { dict: dict, vertexs: this.vertexs, total: this.totalNodes };
   }
 
   exampleTwo() {
@@ -154,12 +162,11 @@ export default class Graph {
       edges: edges,
     };
 
-    console.log(this.vertexs);
-
-    return { dict: dict, vertexs: this.vertexs };
+    return { dict: dict, vertexs: this.vertexs, total: this.totalNodes };
   }
 
   shortestPath(origin, destiny) {
+    console.log(this.vertexs);
     // iniciar com infinito e zerar somente a coluna do nó destiny
 
     for (let i = 0; i < this.totalNodes; ++i) {

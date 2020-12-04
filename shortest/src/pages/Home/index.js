@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "@rocketseat/unform";
 import Graph from "react-graph-vis";
 import {
@@ -21,6 +21,8 @@ function Home() {
   const [totalNodes, setTotalNodes] = useState(0);
   const [destinyInput, setDestinyInput] = useState("");
   const [vertexs, setVertexs] = useState({});
+  const [clickedVertex, setClickedVertex] = useState("");
+  const [example, setExample] = useState(0);
   const graph = new GraphStructure();
   const events = {
     // função que captura os nós selecionados pelo usuario
@@ -28,26 +30,57 @@ function Home() {
       var { nodes, edges } = event;
 
       // adiciona os nos e arestas selecionados no state
-      console.log(nodes);
+      setClickedVertex(nodes[0]);
     },
   };
 
   function handleInput() {
-    console.log(graph.vertexs);
+    setRenderizedGraph(null);
+    let renderized = renderGraph(example);
+    setTimeout(() => {
+      setRenderizedGraph(renderized);
+      console.log(renderized);
+    }, 100);
     if (!vertexs.hasOwnProperty(destinyInput)) {
       alert("Vértice não existente!");
+      return;
     }
+
+    try {
+      let new_renderized = renderizedGraph;
+      let index;
+      let currentNode = destinyInput;
+      for (let i = 0; i < new_renderized.nodes.length; ++i)
+        if (new_renderized.nodes[i].id === currentNode) index = i;
+      console.log(index);
+      console.log(new_renderized.nodes[index]);
+      new_renderized.nodes[index]["color"] = "#6e3f6a";
+      console.log(new_renderized);
+      setRenderizedGraph(null);
+      setTimeout(() => {
+        setRenderizedGraph(new_renderized);
+      }, 50);
+    } catch (e) {}
   }
 
   function renderGraph(id) {
-    if (id.target.id == 0) {
+    console.log("________________________");
+    if (id == 0) {
       console.log("criar grafo aleatorio");
-    } else if (id.target.id == 1) {
-      setRenderizedGraph(graph.exampleOne());
-    } else if (id.target.id == 2) {
-      let response = graph.exampleTwo();
+    } else if (id == 1) {
+      let response = graph.exampleOne();
+      setTotalNodes(response.total);
       setVertexs(response.vertexs);
       setRenderizedGraph(response.dict);
+      setExample(1);
+      return response.dict;
+    } else if (id == 2) {
+      let response = graph.exampleTwo();
+      setTotalNodes(response.total);
+      setVertexs(response.vertexs);
+      setRenderizedGraph(response.dict);
+      setExample(2);
+      return response.dict;
     }
   }
 
@@ -59,14 +92,14 @@ function Home() {
       <Body>
         <Menu>
           <Text>Menu</Text>
-          <button id="0" onClick={(id) => renderGraph(id)}>
+          <button id="0" onClick={(id) => renderGraph(id.target.id)}>
             Grafo Aleatório
           </button>
-          <button id="1" onClick={(id) => renderGraph(id)}>
+          <button id="1" onClick={(id) => renderGraph(id.target.id)}>
             Exemplo 1 - Aula
           </button>
 
-          <button id="2" onClick={(id) => renderGraph(id)}>
+          <button id="2" onClick={(id) => renderGraph(id.target.id)}>
             Exemplo 2 - Aula
           </button>
 
@@ -80,11 +113,11 @@ function Home() {
                     onChange={(destinyInput) =>
                       setDestinyInput(destinyInput.target.value)
                     }
-                    placeholder="Nó Destino"
+                    placeholder="Vértice Destino"
                   />
                 </Form>
                 <button type="submit" onClick={handleInput}>
-                  Menor Caminho
+                  Aplicar
                 </button>
               </FormContainer>
             </Conditional>
@@ -95,7 +128,8 @@ function Home() {
         ) : null}
       </Body>
       <Bottom>
-        <Text>Custo Total: </Text>
+        <SubText>Número de Vértices: {totalNodes}</SubText>
+        <SubText>Custo Total: {cost}</SubText>
       </Bottom>
     </Container>
   );

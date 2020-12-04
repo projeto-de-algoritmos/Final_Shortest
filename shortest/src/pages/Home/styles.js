@@ -14,6 +14,9 @@ export const Header = styled.div`
   flex-direction: column;
   vertical-align: middle;
   background: #000;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 export const Body = styled.div`
   height: 100%;
@@ -45,6 +48,7 @@ export const Menu = styled.div`
       background: ${darken(0.03, "#3b9eff")};
     }
   }
+  textAlign = center;
 `;
 export const Text = styled.p`
   font-size: 30px;
@@ -52,10 +56,8 @@ export const Text = styled.p`
   text-align: center;
 `;
 export const SubText = styled.p`
-  margin-bottom: 5px;
-  font-size: 20px;
-  color: #ff0000;
-  padding: 4px;
+  font-size: 30px;
+  color: #ff0;
   text-align: center;
 `;
 export const Conditional = styled.div`
@@ -68,10 +70,11 @@ export const Conditional = styled.div`
 export const Bottom = styled.div`
   height: 10%;
   width: 100%;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
-  flex-direction: column;
   background: #000;
+  display: flex;
 `;
 
 export const FormContainer = styled.div`
@@ -107,7 +110,7 @@ export const Input = styled.input`
   border: 1;
   border-color: #fff;
   border-radius: 4px;
-  height: 44px;
+  height: 35px;
   padding: 0 15px;
   color: #fff;
   margin: 0 0 10px;
