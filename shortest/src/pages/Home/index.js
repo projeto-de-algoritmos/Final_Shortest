@@ -35,7 +35,7 @@ function Home() {
 
       // adiciona os nos e arestas selecionados no state
       setClickedVertex(nodes[0]);
-
+      console.log(totalNodes);
       graph.vertexs = vertexs;
       graph.totalNodes = totalNodes;
       console.log(nodes[0]);
@@ -55,21 +55,22 @@ function Home() {
     },
   };
 
-  function handleInput() {
+  function ApplyButton() {
     setApplied(true);
-    setRenderizedGraph(null);
-    let renderized = renderGraph(example);
-    setTimeout(() => {
-      setRenderizedGraph(renderized);
-      console.log(renderized);
-    }, 100);
+    // setRenderizedGraph(null);
+    // setTimeout(() => {
+    //   setRenderizedGraph(renderized);
+    //   console.log(renderized);
+    // }, 50);
     if (!vertexs.hasOwnProperty(destinyInput)) {
       alert("Vértice não existente!");
+      setApplied(false);
       return;
     }
+    let renderized = renderGraph(example);
 
     try {
-      let new_renderized = renderizedGraph;
+      let new_renderized = renderized;
       let index;
       let currentNode = destinyInput;
       for (let i = 0; i < new_renderized.nodes.length; ++i)
@@ -92,19 +93,20 @@ function Home() {
     } else if (id == 1) {
       let response = graph.exampleOne();
       setTotalNodes(response.total);
+      console.log(response.total);
       setVertexs(response.vertexs);
-      setRenderizedGraph(response.dict);
       setExample(1);
-      setRenderizedGraph(null);
+      console.log(response.dict);
       setTimeout(() => {
+        setRenderizedGraph(null);
         setRenderizedGraph(response.dict);
       }, 50);
       return response.dict;
     } else if (id == 2) {
       let response = graph.exampleTwo();
       setTotalNodes(response.total);
+      console.log(response.total);
       setVertexs(response.vertexs);
-      setRenderizedGraph(response.dict);
       setExample(2);
       setRenderizedGraph(null);
       setTimeout(() => {
@@ -115,9 +117,9 @@ function Home() {
   }
 
   function drawPath(path) {
-    console.log(path);
+    console.log(totalNodes);
     // setTimeout(() => {
-    //   handleInput();
+    //   ApplyButton();
     // }, 200);
     graph.vertexs = vertexs;
     graph.totalNodes = totalNodes;
@@ -197,7 +199,7 @@ function Home() {
                     placeholder="Vértice Destino"
                   />
                 </Form>
-                <button type="submit" onClick={handleInput}>
+                <button type="submit" onClick={ApplyButton}>
                   Aplicar
                 </button>
               </FormContainer>

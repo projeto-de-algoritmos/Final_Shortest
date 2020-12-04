@@ -49,11 +49,11 @@ export default class Graph {
     this.addVertex("4");
   }
   exampleOne() {
-    // this.vertexs = {};
-    // this.memoization = {};
-    // this.totalNodes = 0;
-    // this.sucessor = {};
-    // this.solutionSet = {};
+    this.vertexs = {};
+    this.memoization = {};
+    this.totalNodes = 0;
+    this.sucessor = {};
+    this.solutionSet = {};
 
     this.addVertex("s");
     this.addVertex("2");
@@ -92,7 +92,7 @@ export default class Graph {
       nodes.push(new_node);
 
       for (let edge in this.vertexs[vertex].neighbors) {
-        console.log(this.vertexs[vertex].neighbors[edge].weight);
+        // console.log(this.vertexs[vertex].neighbors[edge].weight);
         // console.log("edge aqui -> ", edge);
         let new_edge = {
           from: this.vertexs[vertex].neighbors[edge].origin,
@@ -145,7 +145,7 @@ export default class Graph {
       nodes.push(new_node);
 
       for (let edge in this.vertexs[vertex].neighbors) {
-        console.log(this.vertexs[vertex].neighbors[edge].weight);
+        // console.log(this.vertexs[vertex].neighbors[edge].weight);
         // console.log("edge aqui -> ", edge);
         let new_edge = {
           from: this.vertexs[vertex].neighbors[edge].origin,
@@ -182,60 +182,60 @@ export default class Graph {
     // ----------------------------------------------------------- //
     for (let i = 1; i <= this.totalNodes - 1; ++i) {
       for (let vertex in this.vertexs) {
-        console.log(
-          "\n\n----------------------------------------------------------"
-        );
-        console.log("\n\no I eh -> ", i);
-        console.log("vertice atual eh -> ", vertex);
+        // console.log(
+        //   "\n\n----------------------------------------------------------"
+        // );
+        // console.log("\n\no I eh -> ", i);
+        // console.log("vertice atual eh -> ", vertex);
         this.memoization[i][vertex] = this.memoization[i - 1][vertex]; // o valor atual recebe o mesmo valor da coluna acima
 
-        console.log(
-          "esse valor[",
-          i,
-          ",",
-          vertex,
-          "] ->",
-          this.memoization[i][vertex]
-        );
-        console.log(
-          "recebera este[",
-          i - 1,
-          ",",
-          vertex,
-          "]->",
-          this.memoization[i - 1][vertex]
-        );
-        // console.log(this.memoization[i - 1]);
-        console.log(
-          "vizinhos de ",
-          vertex,
-          "-> ",
-          this.vertexs[vertex].neighbors
-        );
-        console.log(this.memoization);
+        // console.log(
+        //   "esse valor[",
+        //   i,
+        //   ",",
+        //   vertex,
+        //   "] ->",
+        //   this.memoization[i][vertex]
+        // );
+        // console.log(
+        //   "recebera este[",
+        //   i - 1,
+        //   ",",
+        //   vertex,
+        //   "]->",
+        //   this.memoization[i - 1][vertex]
+        // );
+        // // console.log(this.memoization[i - 1]);
+        // console.log(
+        //   "vizinhos de ",
+        //   vertex,
+        //   "-> ",
+        //   this.vertexs[vertex].neighbors
+        // );
+        // console.log(this.memoization);
         // para cada vizinho do nó
         for (let edge in this.vertexs[vertex].neighbors) {
-          console.log("aresta atual -> ", edge);
-          console.log(
-            "esse valor[",
-            i,
-            ", ",
-            vertex,
-            "]-> ",
-            this.memoization[i][vertex]
-          );
-          console.log(
-            "eh maior q este?[",
-            i - 1,
-            ", ",
-            edge,
-            "]-> ",
-            this.memoization[i - 1][edge]
-          );
-          console.log(
-            "mais esse? -> ",
-            this.vertexs[vertex].neighbors[edge].weight
-          );
+          // console.log("aresta atual -> ", edge);
+          // console.log(
+          //   "esse valor[",
+          //   i,
+          //   ", ",
+          //   vertex,
+          //   "]-> ",
+          //   this.memoization[i][vertex]
+          // );
+          // console.log(
+          //   "eh maior q este?[",
+          //   i - 1,
+          //   ", ",
+          //   edge,
+          //   "]-> ",
+          //   this.memoization[i - 1][edge]
+          // );
+          // console.log(
+          //   "mais esse? -> ",
+          //   this.vertexs[vertex].neighbors[edge].weight
+          // );
           // o if abaixo verifica se os 2 valores sao infinitos, se sim, vai pra proxima iteração.
           if (
             this.memoization[i][vertex] === Number.MAX_SAFE_INTEGER &&
@@ -250,27 +250,27 @@ export default class Graph {
               this.vertexs[vertex].neighbors[edge].weight
           ) {
             //se sim faz o swap, e adiciona o sucessor.
-            console.log("se sim entao iremos fazer o swap");
+            // console.log("se sim entao iremos fazer o swap");
             this.memoization[i][vertex] =
               this.memoization[i - 1][edge] +
               this.vertexs[vertex].neighbors[edge].weight;
             this.sucessor[vertex] = edge;
-            console.log("o sucessor de ", vertex, "eh o -> ", edge);
+            // console.log("o sucessor de ", vertex, "eh o -> ", edge);
           }
         }
 
-        console.log(
-          "o custo de ",
-          vertex,
-          "na iteração ",
-          i,
-          "na tabela de custos eh -> ",
-          this.memoization[i][vertex]
-        );
+        //     console.log(
+        //       "o custo de ",
+        //       vertex,
+        //       "na iteração ",
+        //       i,
+        //       "na tabela de custos eh -> ",
+        //       this.memoization[i][vertex]
+        //     );
       }
     }
-    console.log(this.memoization);
-    console.log(this.sucessor);
+    // console.log(this.memoization);
+    // console.log(this.sucessor);
     // ----------------------------------------------------------- //
 
     // find solution
@@ -290,13 +290,13 @@ export default class Graph {
         }
       }
     }
-    console.log(
-      "\n\nSolucao----------------------------------------------------------"
-    );
-    console.log(this.solutionSet);
-    console.log(
-      "\n\nfim Solucao----------------------------------------------------------"
-    );
+    // console.log(
+    //   "\n\nSolucao----------------------------------------------------------"
+    // );
+    // console.log(this.solutionSet);
+    // console.log(
+    //   "\n\nfim Solucao----------------------------------------------------------"
+    // );
 
     // find path
     let aux = origin;
