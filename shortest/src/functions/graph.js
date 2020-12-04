@@ -41,7 +41,13 @@ export default class Graph {
       this.vertexs[destiny]["degree"]++;
     }
   }
-  exampleTwo() {
+  exampleOne() {
+    this.vertexs = {};
+    this.memoization = {};
+    this.totalNodes = 0;
+    this.sucessor = {};
+    this.solutionSet = {};
+
     this.addVertex("s");
     this.addVertex("2");
     this.addVertex("3");
@@ -66,6 +72,58 @@ export default class Graph {
     this.addEdge("6", "7", null, -8);
     this.addEdge("7", "5", null, 20);
     this.addEdge("7", "t", null, 44);
+
+    let nodes = [];
+    let edges = [];
+
+    for (let vertex in this.vertexs) {
+      let new_node = {
+        id: vertex,
+        label: vertex,
+        title: "node 1",
+      };
+      nodes.push(new_node);
+
+      for (let edge in this.vertexs[vertex].neighbors) {
+        console.log(this.vertexs[vertex].neighbors[edge].weight);
+        // console.log("edge aqui -> ", edge);
+        let new_edge = {
+          from: this.vertexs[vertex].neighbors[edge].origin,
+          to: this.vertexs[vertex].neighbors[edge].destiny,
+          label: this.vertexs[vertex].neighbors[edge].weight.toString(),
+          color: "#FF0",
+        };
+        edges.push(new_edge);
+      }
+    }
+
+    let dict = {
+      nodes: nodes,
+      edges: edges,
+    };
+
+    return dict;
+  }
+
+  exampleTwo() {
+    this.vertexs = {};
+    this.memoization = {};
+    this.totalNodes = 0;
+    this.sucessor = {};
+    this.solutionSet = {};
+    this.addVertex("A");
+    this.addVertex("B");
+    this.addVertex("C");
+    this.addVertex("D");
+    this.addVertex("E");
+    this.addEdge("A", "B", null, -1);
+    this.addEdge("A", "C", null, 4);
+    this.addEdge("B", "C", null, 3);
+    this.addEdge("B", "D", null, 2);
+    this.addEdge("B", "E", null, 2);
+    this.addEdge("D", "B", null, 1);
+    this.addEdge("D", "C", null, 5);
+    this.addEdge("E", "D", null, -3);
 
     let nodes = [];
     let edges = [];

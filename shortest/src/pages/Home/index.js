@@ -18,8 +18,14 @@ function Home() {
     },
   };
 
-  function renderGraph2() {
-    setRenderizedGraph(graph.exampleTwo());
+  function renderGraph(id) {
+    if (id.target.id == 0) {
+      console.log("criar grafo aleatorio");
+    } else if (id.target.id == 1) {
+      setRenderizedGraph(graph.exampleOne());
+    } else if (id.target.id == 2) {
+      setRenderizedGraph(graph.exampleTwo());
+    }
   }
   return (
     <Container>
@@ -29,10 +35,16 @@ function Home() {
       <Body>
         <Menu>
           <Text>Menu</Text>
-          <button onClick={() => {}}>Criar Grafo Aleatório</button>
-          <button onClick={() => {}}>Solução</button>
+          <button id="0" onClick={(id) => renderGraph(id)}>
+            Criar Grafo Aleatório
+          </button>
+          <button id="1" onClick={(id) => renderGraph(id)}>
+            Exemplo 1 - Aula
+          </button>
 
-          <button onClick={() => renderGraph2()}>Exemplo 2 - Aula</button>
+          <button id="2" onClick={(id) => renderGraph(id)}>
+            Exemplo 2 - Aula
+          </button>
         </Menu>
         {renderizedGraph ? (
           <Graph graph={renderizedGraph} options={options} events={events} />

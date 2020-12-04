@@ -1,7 +1,8 @@
 {
   "interaction": { 
     "multiselect": true,
-    "hoverConnectedEdges": false
+    "hoverConnectedEdges": false,
+    "selectConnectedEdges": false
   },
 
   "autoResize": true,
@@ -11,17 +12,17 @@
     "borderWidth": 3,
     "size": 10,
     "color": {
-      "border": "#FF0000",
-      "background": "#00FF00",
+      "border": "#000",
+      "background": "#FFF",
       "highlight": {
-        "border": "#FFF",
-        "background": "#FFF"
+        "border": "#000",
+        "background": "#FF0"
       }
     },
     "font": { "color": "#2f2f2f" }
   },
   "edges": {
-    "color": "#000",
+    "color": "#FF0",
     "arrows": {
       "to": {
         "enabled": true
