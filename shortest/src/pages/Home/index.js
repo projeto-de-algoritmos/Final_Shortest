@@ -12,6 +12,7 @@ import {
   Conditional,
   FormContainer,
   Input,
+  SubTextInstructions,
 } from "./styles";
 import options from "../../jsons/options.json";
 import GraphStructure from "../../functions/graph";
@@ -22,6 +23,8 @@ function Home() {
   const [destinyInput, setDestinyInput] = useState("");
   const [vertexs, setVertexs] = useState({});
   const [clickedVertex, setClickedVertex] = useState("");
+  const [path, setPath] = useState([]);
+  const [cost, setCost] = useState(0);
   const [example, setExample] = useState(0);
   const graph = new GraphStructure();
   const events = {
@@ -31,6 +34,22 @@ function Home() {
 
       // adiciona os nos e arestas selecionados no state
       setClickedVertex(nodes[0]);
+
+      graph.vertexs = vertexs;
+      graph.totalNodes = totalNodes;
+      console.log(nodes[0]);
+      console.log(destinyInput);
+      if (destinyInput && nodes[0]) {
+        let response = graph.shortestPath(nodes[0], destinyInput);
+        if (response == -1) {
+          alert("Não existe caminho!");
+        } else if (response == -2) {
+          alert("Origem e destino iguais! Custo = 0");
+        } else {
+          setPath(response.path);
+          setCost(response.cost);
+        }
+      }
     },
   };
 
@@ -87,7 +106,7 @@ function Home() {
   return (
     <Container>
       <Header>
-        <Text>Menor caminho</Text>
+        <Text>Menor Caminho</Text>
       </Header>
       <Body>
         <Menu>
@@ -106,6 +125,9 @@ function Home() {
           {renderizedGraph ? (
             <Conditional>
               <FormContainer>
+                <SubTextInstructions>
+                  Agora selecione um nó (v ∈ G) ⇊
+                </SubTextInstructions>
                 <Form>
                   <Input
                     value={destinyInput}
@@ -121,7 +143,11 @@ function Home() {
                 </button>
               </FormContainer>
             </Conditional>
-          ) : null}
+          ) : (
+            <SubTextInstructions>
+              Primeiro renderize um dos grafos acima ⇈
+            </SubTextInstructions>
+          )}
         </Menu>
         {renderizedGraph ? (
           <Graph graph={renderizedGraph} options={options} events={events} />
@@ -129,7 +155,7 @@ function Home() {
       </Body>
       <Bottom>
         <SubText>Número de Vértices: {totalNodes}</SubText>
-        <SubText>Custo Total: {cost}</SubText>
+        <SubText>Menor Custo Total: {cost}</SubText>
       </Bottom>
     </Container>
   );

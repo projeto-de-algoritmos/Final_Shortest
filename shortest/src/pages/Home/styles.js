@@ -60,6 +60,12 @@ export const SubText = styled.p`
   color: #ff0;
   text-align: center;
 `;
+export const SubTextInstructions = styled.p`
+  margin-top: 15px;
+  font-size: 20px;
+  color: #ff0000;
+  text-align: center;
+`;
 export const Conditional = styled.div`
   height: 100%;
   width: 100%;
@@ -67,6 +73,7 @@ export const Conditional = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+
 export const Bottom = styled.div`
   height: 10%;
   width: 100%;
