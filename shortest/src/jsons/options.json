@@ -6,13 +6,13 @@
 
   "autoResize": true,
   "height": "90%",
-  "width": "100%",
+  "width": "90%",
   "nodes": {
     "borderWidth": 3,
     "size": 10,
     "color": {
-      "border": "#FFF",
-      "background": "#FFF",
+      "border": "#FF0000",
+      "background": "#00FF00",
       "highlight": {
         "border": "#FFF",
         "background": "#FFF"
