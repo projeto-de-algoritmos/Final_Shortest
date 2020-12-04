@@ -4,6 +4,7 @@ class Graph {
     this.memoization = {};
     this.totalNodes = 0;
     this.sucessor = {};
+    this.solutionSet = {};
   }
 
   // adição de um vertice 'id' no grafo
@@ -41,7 +42,7 @@ class Graph {
     }
   }
 
-  shortestPath(destiny) {
+  shortestPath(origin, destiny) {
     // iniciar com infinito e zerar somente a coluna do nó destiny
 
     for (let i = 0; i < this.totalNodes; ++i) {
@@ -151,12 +152,15 @@ class Graph {
     // find solution
 
     for (let vertex in this.vertexs) {
-      let aux = this.memoization[this.totalNodes - 1][vertex];
+      let aux = this.memoization[this.totalNodes - 1][vertex]; // salvando o valor do vertex atual na ultima iteração e salvando em aux
       if (aux == Number.MAX_SAFE_INTEGER) {
+        // se o ultimo valor do vertex atual na ultima iteração for infinito, significa que nao existe aresta para o nó destino
+        //partin do de vertex, entao é adicionado null.
         this.solutionSet[vertex] = null;
         continue;
       }
       for (let i = this.totalNodes - 2; i >= 0; --i) {
+        // verificando até qual indice o valor permanece o mesmo para sabermos o menor numero de arestas
         if (this.memoization[i][vertex] == aux) {
           this.solutionSet[vertex] = i;
         }
@@ -169,5 +173,33 @@ class Graph {
     console.log(
       "\n\nfim Solucao----------------------------------------------------------"
     );
+
+    // find path
+    let aux = origin;
+    if (aux == destiny) {
+      console.log("Destino e origem iguais");
+      return;
+    }
+    if (!this.sucessor.hasOwnProperty(origin)) {
+      console.log("Não existe um caminho entre ", origin, " e ", destiny);
+      return;
+    }
+    let path = [];
+    while (aux != destiny) {
+      // procurando o caminho do nó origem até o destino;
+      path.push(aux);
+
+      let last = this.sucessor[aux];
+
+      aux = last;
+    }
+    path.push(aux);
+    let response = {
+      path: path,
+      cost: this.memoization[this.solutionSet[origin]][origin],
+    };
+    console.log(response);
+
+    return response;
   }
 }
