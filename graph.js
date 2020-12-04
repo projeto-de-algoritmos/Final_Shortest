@@ -149,5 +149,25 @@ class Graph {
     // ----------------------------------------------------------- //
 
     // find solution
+
+    for (let vertex in this.vertexs) {
+      let aux = this.memoization[this.totalNodes - 1][vertex];
+      if (aux == Number.MAX_SAFE_INTEGER) {
+        this.solutionSet[vertex] = null;
+        continue;
+      }
+      for (let i = this.totalNodes - 2; i >= 0; --i) {
+        if (this.memoization[i][vertex] == aux) {
+          this.solutionSet[vertex] = i;
+        }
+      }
+    }
+    console.log(
+      "\n\nSolucao----------------------------------------------------------"
+    );
+    console.log(this.solutionSet);
+    console.log(
+      "\n\nfim Solucao----------------------------------------------------------"
+    );
   }
 }
