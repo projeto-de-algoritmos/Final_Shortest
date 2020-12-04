@@ -26,6 +26,7 @@ function Home() {
   const [path, setPath] = useState([]);
   const [cost, setCost] = useState(0);
   const [example, setExample] = useState(0);
+  const [applied, setApplied] = useState(false);
   const graph = new GraphStructure();
   const events = {
     // função que captura os nós selecionados pelo usuario
@@ -48,12 +49,14 @@ function Home() {
         } else {
           setPath(response.path);
           setCost(response.cost);
+          drawPath(response.path);
         }
       }
     },
   };
 
   function handleInput() {
+    setApplied(true);
     setRenderizedGraph(null);
     let renderized = renderGraph(example);
     setTimeout(() => {
@@ -92,6 +95,10 @@ function Home() {
       setVertexs(response.vertexs);
       setRenderizedGraph(response.dict);
       setExample(1);
+      setRenderizedGraph(null);
+      setTimeout(() => {
+        setRenderizedGraph(response.dict);
+      }, 50);
       return response.dict;
     } else if (id == 2) {
       let response = graph.exampleTwo();
@@ -99,8 +106,54 @@ function Home() {
       setVertexs(response.vertexs);
       setRenderizedGraph(response.dict);
       setExample(2);
+      setRenderizedGraph(null);
+      setTimeout(() => {
+        setRenderizedGraph(response.dict);
+      }, 50);
       return response.dict;
     }
+  }
+
+  function drawPath(path) {
+    console.log(path);
+    // setTimeout(() => {
+    //   handleInput();
+    // }, 200);
+    graph.vertexs = vertexs;
+    graph.totalNodes = totalNodes;
+    let renderized = renderGraph(example);
+    console.log(renderized.nodes[0]);
+    for (let i = 0; i < path.length; ++i) {
+      for (let j = 0; j < totalNodes; ++j) {
+        if (renderized.nodes[j].id == path[i]) {
+          console.log(renderized.nodes[j].id);
+          if (i == 0) {
+            renderized.nodes[j]["color"] = "#91c095";
+          } else if (i == path.length - 1) {
+            renderized.nodes[j]["color"] = "#6e3f6a";
+          } else {
+            renderized.nodes[j]["color"] = "#8b0000";
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < path.length - 1; ++i) {
+      for (let edge in renderized.edges) {
+        if (
+          renderized.edges[edge].from == path[i] &&
+          renderized.edges[edge].to == path[i + 1]
+        ) {
+          renderized.edges[edge]["color"] = "#8b0000";
+        }
+      }
+    }
+    console.log(renderized);
+    console.log(path);
+    setRenderizedGraph(null);
+    setTimeout(() => {
+      setRenderizedGraph(renderized);
+    }, 150);
   }
 
   return (
@@ -125,9 +178,15 @@ function Home() {
           {renderizedGraph ? (
             <Conditional>
               <FormContainer>
-                <SubTextInstructions>
-                  Agora selecione um nó (v ∈ G) ⇊
-                </SubTextInstructions>
+                {applied ? (
+                  <SubTextInstructions>
+                    Clique em algum nó para saber o menor caminho
+                  </SubTextInstructions>
+                ) : (
+                  <SubTextInstructions>
+                    Agora selecione um nó (v ∈ G) ⇊
+                  </SubTextInstructions>
+                )}
                 <Form>
                   <Input
                     value={destinyInput}
