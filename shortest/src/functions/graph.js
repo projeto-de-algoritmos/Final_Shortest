@@ -47,7 +47,6 @@ export default class Graph {
   }
 
   getTotalVertex() {
-    console.log(this.totalNodes);
     return this.totalNodes;
   }
 

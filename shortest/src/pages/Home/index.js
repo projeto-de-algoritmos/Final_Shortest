@@ -20,10 +20,10 @@ import exampleTwo from "../../jsons/example2.json";
 import GraphStructure from "../../functions/graph";
 
 const graph = new GraphStructure();
+var renderWithNodeDestiny = null;
 
 function Home() {
   const [standart, setStandart] = useState(null);
-  const [renderWithNodeDestiny, setRenderWithNodeDestiny] = useState(null);
   const [renderizedGraph, setRenderizedGraph] = useState(null);
   const [totalNodes, setTotalNodes] = useState(0);
   const [destinyInput, setDestinyInput] = useState("");
@@ -39,8 +39,10 @@ function Home() {
       var { nodes, edges } = event;
 
       // adiciona os nos e arestas selecionados no state
+
       setClickedVertex(nodes[0]);
-      // renderize(renderWithNodeDestiny, 15);
+      ApplyButton();
+      // alert("test");
       if (destinyInput && nodes[0]) {
         let response = graph.shortestPath(nodes[0], destinyInput);
         if (response == -1) {
@@ -69,8 +71,8 @@ function Home() {
       setApplied(false);
       return;
     }
-    renderize(converter(), 100);
-    let new_renderized = renderizedGraph;
+    // renderize(converter(), 15);
+    let new_renderized = renderGraph(example);
     let index;
     let currentNode = destinyInput;
 
@@ -83,9 +85,9 @@ function Home() {
     new_renderized.nodes[index]["color"] = "#6e3f6a";
 
     // renderizando com a cor alterada
-    renderize(new_renderized, 50);
+    renderize(new_renderized, 25);
     console.log("novo renderizado", new_renderized);
-    setRenderWithNodeDestiny(new_renderized);
+    renderWithNodeDestiny = new_renderized;
     return new_renderized;
   }
   function converter() {
@@ -120,7 +122,7 @@ function Home() {
   function renderGraph(id) {
     if (id == 0) {
       console.log("criar grafo aleatorio");
-      console.log("novo de novo renderizado", renderWithNodeDestiny);
+      console.log(renderWithNodeDestiny);
     } else if (id == 1) {
       graph.clear(); // zerando a estrutura
 
@@ -142,6 +144,8 @@ function Home() {
       setTimeout(() => {
         setRenderizedGraph(new_renderized);
       }, 50);
+
+      return new_renderized;
     } else if (id == 2) {
       graph.clear();
       for (let vertex of exampleTwo.nodes) {
@@ -160,19 +164,19 @@ function Home() {
       setTimeout(() => {
         setRenderizedGraph(new_renderized);
       }, 50);
+      return new_renderized;
     }
   }
 
   function drawPath(path) {
-    console.log(renderWithNodeDestiny);
     let renderized = renderWithNodeDestiny;
-    console.log(renderized.nodes[0]);
+    console.log(renderized);
     for (let i = 0; i < path.length; ++i) {
       for (let j = 0; j < totalNodes; ++j) {
         if (renderized.nodes[j].id == path[i]) {
           console.log(renderized.nodes[j].id);
           if (i == 0) {
-            renderized.nodes[j]["color"] = "#91c095";
+            renderized.nodes[j]["color"] = "#477b4b";
           } else if (i == path.length - 1) {
             renderized.nodes[j]["color"] = "#6e3f6a";
           } else {
@@ -224,11 +228,12 @@ function Home() {
               <FormContainer>
                 {applied ? (
                   <SubTextInstructions>
-                    Clique em algum nó para saber o menor caminho
+                    Clique em algum vértice, do grafo ao lado, para saber o
+                    menor caminho
                   </SubTextInstructions>
                 ) : (
                   <SubTextInstructions>
-                    Agora selecione um nó (v ∈ G) ⇊
+                    Agora selecione um vértice de destino (v ∈ G) ⇊
                   </SubTextInstructions>
                 )}
                 <Form>
