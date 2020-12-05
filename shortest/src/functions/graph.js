@@ -21,7 +21,7 @@ export default class Graph {
 
   // OBS: parametro 'type' opcional (se nao for passado ele considera uma aresta orientada (a->c))
   // se for passado o valor 'undirected' em 'type', ele alem de fazer a aresta (a->c) ele faz a aresta (c->a)
-  addEdge(origin, destiny, type, weight) {
+  addEdge(origin, destiny, weight, type) {
     let new_edge = {
       origin: origin,
       destiny: destiny,
@@ -42,129 +42,24 @@ export default class Graph {
     }
   }
 
-  test() {
-    this.addVertex("s");
-    this.addVertex("2");
-    this.addVertex("3");
-    this.addVertex("4");
+  getVertex() {
+    return this.vertexs;
   }
-  exampleOne() {
+
+  getTotalVertex() {
+    console.log(this.totalNodes);
+    return this.totalNodes;
+  }
+
+  clear() {
     this.vertexs = {};
     this.memoization = {};
     this.totalNodes = 0;
     this.sucessor = {};
     this.solutionSet = {};
-
-    this.addVertex("s");
-    this.addVertex("2");
-    this.addVertex("3");
-    this.addVertex("4");
-    this.addVertex("5");
-    this.addVertex("6");
-    this.addVertex("7");
-    this.addVertex("t");
-
-    this.addEdge("s", "2", null, 9);
-    this.addEdge("s", "6", null, 6);
-    this.addEdge("s", "7", null, 15);
-    this.addEdge("2", "3", null, 10);
-    this.addEdge("3", "5", null, -16);
-    this.addEdge("3", "t", null, 19);
-    this.addEdge("4", "3", null, 6);
-    this.addEdge("4", "t", null, 6);
-    this.addEdge("5", "4", null, 11);
-    this.addEdge("5", "t", null, 16);
-    this.addEdge("6", "3", null, 18);
-    this.addEdge("6", "5", null, 30);
-    this.addEdge("6", "7", null, -8);
-    this.addEdge("7", "5", null, 20);
-    this.addEdge("7", "t", null, 44);
-
-    let nodes = [];
-    let edges = [];
-
-    for (let vertex in this.vertexs) {
-      let new_node = {
-        id: vertex,
-        label: vertex,
-        title: "node 1",
-      };
-      nodes.push(new_node);
-
-      for (let edge in this.vertexs[vertex].neighbors) {
-        // console.log(this.vertexs[vertex].neighbors[edge].weight);
-        // console.log("edge aqui -> ", edge);
-        let new_edge = {
-          from: this.vertexs[vertex].neighbors[edge].origin,
-          to: this.vertexs[vertex].neighbors[edge].destiny,
-          label: this.vertexs[vertex].neighbors[edge].weight.toString(),
-          color: "#FF0",
-        };
-        edges.push(new_edge);
-      }
-    }
-
-    let dict = {
-      nodes: nodes,
-      edges: edges,
-    };
-    // console.log(this.vertexs);
-
-    return { dict: dict, vertexs: this.vertexs, total: this.totalNodes };
-  }
-
-  exampleTwo() {
-    this.vertexs = {};
-    this.memoization = {};
-    this.totalNodes = 0;
-    this.sucessor = {};
-    this.solutionSet = {};
-    this.addVertex("A");
-    this.addVertex("B");
-    this.addVertex("C");
-    this.addVertex("D");
-    this.addVertex("E");
-    this.addEdge("A", "B", null, -1);
-    this.addEdge("A", "C", null, 4);
-    this.addEdge("B", "C", null, 3);
-    this.addEdge("B", "D", null, 2);
-    this.addEdge("B", "E", null, 2);
-    this.addEdge("D", "B", null, 1);
-    this.addEdge("D", "C", null, 5);
-    this.addEdge("E", "D", null, -3);
-
-    let nodes = [];
-    let edges = [];
-
-    for (let vertex in this.vertexs) {
-      let new_node = {
-        id: vertex,
-        label: vertex,
-        title: "node 1",
-      };
-      nodes.push(new_node);
-
-      for (let edge in this.vertexs[vertex].neighbors) {
-        let new_edge = {
-          from: this.vertexs[vertex].neighbors[edge].origin,
-          to: this.vertexs[vertex].neighbors[edge].destiny,
-          label: this.vertexs[vertex].neighbors[edge].weight.toString(),
-          color: "#FF0",
-        };
-        edges.push(new_edge);
-      }
-    }
-
-    let dict = {
-      nodes: nodes,
-      edges: edges,
-    };
-
-    return { dict: dict, vertexs: this.vertexs, total: this.totalNodes };
   }
 
   shortestPath(origin, destiny) {
-    console.log(this.vertexs);
     // iniciar com infinito e zerar somente a coluna do nó destiny
 
     for (let i = 0; i < this.totalNodes; ++i) {
@@ -249,8 +144,6 @@ export default class Graph {
       path: path,
       cost: this.memoization[this.solutionSet[origin]][origin],
     };
-    console.log(response);
-
     return response;
   }
 }
