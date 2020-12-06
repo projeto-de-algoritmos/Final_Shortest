@@ -39,7 +39,10 @@ function Home() {
       var { nodes, edges } = event;
 
       // adiciona os nos e arestas selecionados no state
-
+      if (nodes.length == 0 || destinyInput == "") {
+        console.log(nodes);
+        return;
+      }
       setClickedVertex(nodes[0]);
       ApplyButton();
       // alert("test");

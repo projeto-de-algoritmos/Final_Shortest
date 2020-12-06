@@ -1,7 +1,7 @@
 {
   "interaction": { 
     "multiselect": true,
-    "hoverConnectedEdges": false,
+    "hoverConnectedEdges": true,
     "selectConnectedEdges": false
   },
 
@@ -9,6 +9,7 @@
   "height": "95%",
   "width": "100%",
   "nodes": {
+    
     "borderWidth": 3,
     "size": 10,
     "color": {
