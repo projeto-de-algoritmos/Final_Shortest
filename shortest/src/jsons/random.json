@@ -1,0 +1,53 @@
+{
+  "nodes": [
+    {"id": "a"},
+    {"id": "b"},
+    {"id": "c"},
+    {"id": "d"},
+    {"id": "e"},
+    {"id": "f"},
+    {"id": "g"},
+    {"id": "h"},
+    {"id": "i"},
+    {"id": "j"},
+    {"id": "k"},
+    {"id": "l"},
+    {"id": "m"}
+
+    
+  ],
+  "edges": [
+    {"origin": "a", "destiny": "b", "weight": -16},
+    {"origin": "a", "destiny": "f", "weight": -99},
+    {"origin": "a", "destiny": "g", "weight": 10},
+    {"origin": "b", "destiny": "c", "weight": 89},
+    {"origin": "b", "destiny": "f", "weight": -30},
+    {"origin": "b", "destiny": "m", "weight": -5},
+    {"origin": "b", "destiny": "i", "weight": -4},
+    {"origin": "c", "destiny": "e", "weight": 14},
+    {"origin": "c", "destiny": "j", "weight": 34},
+    {"origin": "c", "destiny": "k", "weight": 1},
+    {"origin": "c", "destiny": "i", "weight": 30},
+    {"origin": "d", "destiny": "c", "weight": 11},
+    {"origin": "d", "destiny": "h", "weight": 90},
+    {"origin": "d", "destiny": "j", "weight": -90},
+    {"origin": "e", "destiny": "d", "weight": -19},
+    {"origin": "e", "destiny": "h", "weight": -1},
+    {"origin": "f", "destiny": "c", "weight": -31},
+    {"origin": "f", "destiny": "e", "weight": 65},
+    {"origin": "f", "destiny": "g", "weight": 44},
+    {"origin": "g", "destiny": "e", "weight": 37},
+    {"origin": "g", "destiny": "h", "weight": 8},
+    {"origin": "j", "destiny": "k", "weight": 40},
+    {"origin": "k", "destiny": "m", "weight": -10},
+    {"origin": "i", "destiny": "m", "weight": 2},
+    {"origin": "b", "destiny": "l", "weight": -8},
+    {"origin": "a", "destiny": "l", "weight": 5},
+    {"origin": "m", "destiny": "l", "weight": -15},
+    {"origin": "i", "destiny": "k", "weight": 99}
+
+
+   
+
+  ]
+}

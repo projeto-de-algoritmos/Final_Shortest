@@ -60,7 +60,6 @@ export default class Graph {
 
   shortestPath(destiny) {
     // iniciar com infinito e zerar somente a coluna do nó destiny
-
     for (let i = 0; i < this.totalNodes; ++i) {
       this.memoization[i] = {}; // criando objeto para cada iteração
       for (let vertex in this.vertexs) {
@@ -144,8 +143,8 @@ export default class Graph {
       cost: this.memoization[this.solutionSet[origin]][origin],
     };
 
-    console.log(this.memoization);
-    console.log(this.solutionSet);
+    console.log("memoization", this.memoization);
+    console.log("solutionset", this.solutionSet);
     return response;
   }
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "@rocketseat/unform";
 import Graph from "react-graph-vis";
-import Picker from "react-picker";
 import {
   Container,
   Header,
@@ -19,6 +18,7 @@ import {
 import options from "../../jsons/options.json";
 import exampleOne from "../../jsons/example1.json";
 import exampleTwo from "../../jsons/example2.json";
+import random from "../../jsons/random.json";
 import GraphStructure from "../../functions/graph";
 
 const graph = new GraphStructure();
@@ -46,11 +46,10 @@ function Home() {
         !graph.getVertex().hasOwnProperty(destinyInput) ||
         !applied
       ) {
-        console.log(destinyInput);
         return;
       }
       // alert("test");
-      console.log(graph.memoization);
+      // console.log(graph.memoization);
       if (destinyInput && nodes[0]) {
         let response = graph.findSolution(nodes[0], destinyInput);
         if (response == -1) {
@@ -144,8 +143,25 @@ function Home() {
       setDestinyInput("");
     }
     if (id == 0) {
-      console.log("criar grafo aleatorio");
+      // console.log("criar grafo aleatorio");
+      graph.clear(); // zerando a estrutura
+
+      for (let vertex of random.nodes) {
+        graph.addVertex(vertex.id);
+      }
+      for (let edge of random.edges) {
+        graph.addEdge(edge.origin, edge.destiny, edge.weight);
+      }
+      let new_renderized = converter();
+
       setRenderizedGraph(null);
+      setExample(id);
+      setTotalNodes(graph.getTotalVertex());
+      setTimeout(() => {
+        setRenderizedGraph(new_renderized);
+      }, 50);
+
+      return new_renderized;
     } else if (id == 1) {
       graph.clear(); // zerando a estrutura
 
