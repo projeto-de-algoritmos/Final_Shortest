@@ -13,40 +13,50 @@ import {
   FormContainer,
   Input,
   SubTextInstructions,
+  GraphContainer,
 } from "./styles";
 import options from "../../jsons/options.json";
+import exampleOne from "../../jsons/example1.json";
+import exampleTwo from "../../jsons/example2.json";
 import GraphStructure from "../../functions/graph";
 
+const graph = new GraphStructure();
 function Home() {
   const [renderizedGraph, setRenderizedGraph] = useState(null);
   const [totalNodes, setTotalNodes] = useState(0);
   const [destinyInput, setDestinyInput] = useState("");
-  const [vertexs, setVertexs] = useState({});
   const [clickedVertex, setClickedVertex] = useState("");
   const [path, setPath] = useState([]);
   const [cost, setCost] = useState(0);
   const [example, setExample] = useState(0);
   const [applied, setApplied] = useState(false);
-  const graph = new GraphStructure();
+  const [lastValid, setLastValid] = useState("");
+
   const events = {
     // função que captura os nós selecionados pelo usuario
     select: function (event) {
       var { nodes, edges } = event;
 
-      // adiciona os nos e arestas selecionados no state
-      setClickedVertex(nodes[0]);
-      console.log(totalNodes);
-      graph.vertexs = vertexs;
-      graph.totalNodes = totalNodes;
-      console.log(nodes[0]);
-      console.log(destinyInput);
+      // se nao tiver vertice selecionado ou o input vazio, retorna
+      if (
+        nodes.length == 0 ||
+        destinyInput == "" ||
+        !graph.getVertex().hasOwnProperty(destinyInput)
+      ) {
+        console.log(nodes);
+        return;
+      }
+      // alert("test");
       if (destinyInput && nodes[0]) {
-        let response = graph.shortestPath(nodes[0], destinyInput);
+        graph.shortestPath(destinyInput); // acha todas as soluções pro nó passado
+        let response = graph.findSolution(nodes[0], destinyInput);
         if (response == -1) {
           alert("Não existe caminho!");
         } else if (response == -2) {
           alert("Origem e destino iguais! Custo = 0");
         } else {
+          setClickedVertex(nodes[0]);
+          ApplyButton();
           setPath(response.path);
           setCost(response.cost);
           drawPath(response.path);
@@ -54,87 +64,134 @@ function Home() {
       }
     },
   };
-
-  function ApplyButton() {
-    setApplied(true);
-    // setRenderizedGraph(null);
-    // setTimeout(() => {
-    //   setRenderizedGraph(renderized);
-    //   console.log(renderized);
-    // }, 50);
-    if (!vertexs.hasOwnProperty(destinyInput)) {
-      alert("Vértice não existente!");
-      setApplied(false);
-      return;
-    }
-    let renderized = renderGraph(example);
-
-    try {
-      let new_renderized = renderized;
-      let index;
-      let currentNode = destinyInput;
-      for (let i = 0; i < new_renderized.nodes.length; ++i)
-        if (new_renderized.nodes[i].id === currentNode) index = i;
-      console.log(index);
-      console.log(new_renderized.nodes[index]);
-      new_renderized.nodes[index]["color"] = "#6e3f6a";
-      console.log(new_renderized);
-      setRenderizedGraph(null);
-      setTimeout(() => {
-        setRenderizedGraph(new_renderized);
-      }, 50);
-    } catch (e) {}
+  function renderize(graph, time) {
+    setRenderizedGraph(null);
+    setTimeout(() => {
+      setRenderizedGraph(graph);
+    }, time);
   }
 
-  function renderGraph(id) {
-    console.log("________________________");
+  function ApplyButton() {
+    if (destinyInput == "") {
+      alert("Insira um vértice no campo 'Vértice Destino'");
+      return;
+    }
+    setApplied(true);
+    if (!graph.getVertex().hasOwnProperty(destinyInput)) {
+      let response = "Vertice '" + destinyInput + "' não existente!";
+      alert(response);
+      setApplied(false);
+      setDestinyInput("");
+      return;
+    }
+
+    let new_renderized = renderGraph(example, 0);
+    let index;
+    let currentNode = destinyInput;
+
+    // achando o nó escolhido pelo usuario e mudando a cor dele no grafo
+    for (let i = 0; i < new_renderized.nodes.length; ++i) {
+      if (new_renderized.nodes[i].id === currentNode) {
+        index = i;
+      }
+    }
+    new_renderized.nodes[index]["color"] = "#91c095";
+
+    // renderizando com a cor alterada
+    renderize(new_renderized, 25);
+    return new_renderized;
+  }
+  function converter() {
+    let nodes = [];
+    let edges = [];
+
+    for (let vertex in graph.vertexs) {
+      let new_node = {
+        id: vertex,
+        label: vertex,
+        title: "node 1",
+      };
+      nodes.push(new_node);
+
+      for (let edge in graph.vertexs[vertex].neighbors) {
+        let new_edge = {
+          from: graph.vertexs[vertex].neighbors[edge].origin,
+          to: graph.vertexs[vertex].neighbors[edge].destiny,
+          label: graph.vertexs[vertex].neighbors[edge].weight.toString(),
+          color: "#FF0",
+        };
+        edges.push(new_edge);
+      }
+    }
+
+    return {
+      nodes: nodes,
+      edges: edges,
+    };
+  }
+
+  function renderGraph(id, is_user) {
+    if (is_user) {
+      setApplied(false);
+      setDestinyInput("");
+    }
     if (id == 0) {
       console.log("criar grafo aleatorio");
     } else if (id == 1) {
-      let response = graph.exampleOne();
-      setTotalNodes(response.total);
-      console.log(response.total);
-      setVertexs(response.vertexs);
-      setExample(1);
-      console.log(response.dict);
-      setTimeout(() => {
-        setRenderizedGraph(null);
-        setRenderizedGraph(response.dict);
-      }, 50);
-      return response.dict;
-    } else if (id == 2) {
-      let response = graph.exampleTwo();
-      setTotalNodes(response.total);
-      console.log(response.total);
-      setVertexs(response.vertexs);
-      setExample(2);
+      graph.clear(); // zerando a estrutura
+
+      // carregando o grafo de um arquivo externo
+      for (let vertex of exampleOne.nodes) {
+        graph.addVertex(vertex.id);
+      }
+      for (let edge of exampleOne.edges) {
+        graph.addEdge(edge.origin, edge.destiny, edge.weight);
+      }
+
+      // renderizando na tela
+      let new_renderized = converter();
+
       setRenderizedGraph(null);
+      setExample(id);
+      setTotalNodes(graph.getTotalVertex());
       setTimeout(() => {
-        setRenderizedGraph(response.dict);
+        setRenderizedGraph(new_renderized);
       }, 50);
-      return response.dict;
+
+      return new_renderized;
+    } else if (id == 2) {
+      graph.clear();
+      for (let vertex of exampleTwo.nodes) {
+        graph.addVertex(vertex.id);
+      }
+      for (let edge of exampleTwo.edges) {
+        graph.addEdge(edge.origin, edge.destiny, edge.weight);
+      }
+
+      // renderizando na tela
+      let new_renderized = converter();
+
+      setRenderizedGraph(null);
+      setExample(id);
+      setTotalNodes(graph.getTotalVertex());
+      setTimeout(() => {
+        setRenderizedGraph(new_renderized);
+      }, 50);
+      return new_renderized;
     }
   }
 
   function drawPath(path) {
-    console.log(totalNodes);
-    // setTimeout(() => {
-    //   ApplyButton();
-    // }, 200);
-    graph.vertexs = vertexs;
-    graph.totalNodes = totalNodes;
-    let renderized = renderGraph(example);
-    console.log(renderized.nodes[0]);
+    let renderized = ApplyButton(example);
     for (let i = 0; i < path.length; ++i) {
       for (let j = 0; j < totalNodes; ++j) {
         if (renderized.nodes[j].id == path[i]) {
-          console.log(renderized.nodes[j].id);
           if (i == 0) {
-            renderized.nodes[j]["color"] = "#91c095";
+            renderized.nodes[j]["color"] = "#a4609e";
           } else if (i == path.length - 1) {
-            renderized.nodes[j]["color"] = "#6e3f6a";
+            renderized.nodes[j]["color"] = "#91c095";
           } else {
-            renderized.nodes[j]["color"] = "#8b0000";
+            renderized.nodes[j]["color"] = "#a4609e";
           }
         }
       }
@@ -146,11 +203,10 @@ function Home() {
           renderized.edges[edge].from == path[i] &&
           renderized.edges[edge].to == path[i + 1]
         ) {
-          renderized.edges[edge]["color"] = "#8b0000";
+          renderized.edges[edge]["color"] = "#a4609e";
         }
       }
     }
-    console.log(renderized);
     console.log(path);
     setRenderizedGraph(null);
     setTimeout(() => {
@@ -166,14 +222,14 @@ function Home() {
       <Body>
         <Menu>
           <Text>Menu</Text>
-          <button id="0" onClick={(id) => renderGraph(id.target.id)}>
+          <button id="0" onClick={(id) => renderGraph(id.target.id, 1)}>
             Grafo Aleatório
           </button>
-          <button id="1" onClick={(id) => renderGraph(id.target.id)}>
+          <button id="1" onClick={(id) => renderGraph(id.target.id, 1)}>
             Exemplo 1 - Aula
           </button>
 
-          <button id="2" onClick={(id) => renderGraph(id.target.id)}>
+          <button id="2" onClick={(id) => renderGraph(id.target.id, 1)}>
             Exemplo 2 - Aula
           </button>
 
@@ -182,11 +238,12 @@ function Home() {
               <FormContainer>
                 {applied ? (
                   <SubTextInstructions>
-                    Clique em algum nó para saber o menor caminho
+                    Clique em algum vértice, do grafo ao lado, para saber o
+                    menor caminho
                   </SubTextInstructions>
                 ) : (
                   <SubTextInstructions>
-                    Agora selecione um nó (v ∈ G) ⇊
+                    Abaixo selecione um vértice de destino
                   </SubTextInstructions>
                 )}
                 <Form>
@@ -206,12 +263,14 @@ function Home() {
             </Conditional>
           ) : (
             <SubTextInstructions>
-              Primeiro renderize um dos grafos acima ⇈
+              Primeiro renderize um dos grafos acima
             </SubTextInstructions>
           )}
         </Menu>
         {renderizedGraph ? (
-          <Graph graph={renderizedGraph} options={options} events={events} />
+          <GraphContainer>
+            <Graph graph={renderizedGraph} options={options} events={events} />
+          </GraphContainer>
         ) : null}
       </Body>
       <Bottom>

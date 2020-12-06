@@ -1,28 +1,44 @@
 {
   "interaction": { 
     "multiselect": true,
-    "hoverConnectedEdges": false,
+    "hoverConnectedEdges": true,
+    "dragView": true,
     "selectConnectedEdges": false
+  },
+
+  "physics" : {
+    "enabled": true
+  },
+
+  "groups": { 
+    "myGroup" : { 
+      "color" : { 
+        "background" : "red" 
+      }, 
+      "borderWidth" : 3 
+    } 
   },
 
   "autoResize": true,
   "height": "95%",
   "width": "100%",
   "nodes": {
+    
     "borderWidth": 3,
     "size": 10,
     "color": {
       "border": "#000",
-      "background": "#FFF",
-      "highlight": {
-        "border": "#91c095",
-        "background": "#91c095"
-      }
+      "background": "#FFF"
+
     },
     "font": { "color": "#2f2f2f" }
   },
   "edges": {
-    "color": "#FF0",
+    "width": 3,
+    "color": {
+      "color":"#FF0"
+
+    },
     "arrows": {
       "to": {
         "enabled": true
