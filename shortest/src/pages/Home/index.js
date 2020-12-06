@@ -212,7 +212,7 @@ function Home() {
       for (let j = 0; j < totalNodes; ++j) {
         if (renderized.nodes[j].id == path[i]) {
           if (i == 0) {
-            renderized.nodes[j]["color"] = "#a4609e";
+            renderized.nodes[j]["color"] = "#c397c0";
           } else if (i == path.length - 1) {
             renderized.nodes[j]["color"] = "#91c095";
           } else {
