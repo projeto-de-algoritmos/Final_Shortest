@@ -35,11 +35,11 @@ export const Menu = styled.div`
   button {
     margin: 15px;
     padding: 10px;
-    height: 8%;
+    height: 12%;
     width: 60%;
-    background: linear-gradient(-90deg, #fff, #000);
+    background: #FFF;
     font-weight: bold;
-    color: #fff;
+    color: #000;
     border: 0;
     border-radius: 4px;
     font-size: 16px;
@@ -84,6 +84,12 @@ export const Bottom = styled.div`
   display: flex;
 `;
 
+export const GraphContainer = styled.div`
+  height: 100%;
+  width: 80%;
+  display: flex;
+`;
+
 export const FormContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -97,7 +103,7 @@ export const FormContainer = styled.div`
     button {
       margin: 15px;
       padding: 10px;
-      height: 8%;
+      height: 12%;
       width: 60%;
       background: linear-gradient(-90deg, #fff, #000);
       font-weight: bold;

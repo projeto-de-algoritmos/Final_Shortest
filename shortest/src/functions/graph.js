@@ -143,6 +143,9 @@ export default class Graph {
       path: path,
       cost: this.memoization[this.solutionSet[origin]][origin],
     };
+
+    console.log(this.memoization);
+    console.log(this.solutionSet);
     return response;
   }
 }

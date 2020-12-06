@@ -13,6 +13,7 @@ import {
   FormContainer,
   Input,
   SubTextInstructions,
+  GraphContainer,
 } from "./styles";
 import options from "../../jsons/options.json";
 import exampleOne from "../../jsons/example1.json";
@@ -68,6 +69,10 @@ function Home() {
   }
 
   function ApplyButton() {
+    if (destinyInput == "") {
+      alert("Insira um vértice no campo 'Vértice Destino'");
+      return;
+    }
     setApplied(true);
     if (!graph.getVertex().hasOwnProperty(destinyInput)) {
       alert("Vértice não existente!");
@@ -89,7 +94,6 @@ function Home() {
 
     // renderizando com a cor alterada
     renderize(new_renderized, 25);
-    console.log("novo renderizado", new_renderized);
     renderWithNodeDestiny = new_renderized;
     return new_renderized;
   }
@@ -126,6 +130,7 @@ function Home() {
     if (id == 0) {
       console.log("criar grafo aleatorio");
       console.log(renderWithNodeDestiny);
+      console.log(renderizedGraph);
     } else if (id == 1) {
       graph.clear(); // zerando a estrutura
 
@@ -173,11 +178,9 @@ function Home() {
 
   function drawPath(path) {
     let renderized = renderWithNodeDestiny;
-    console.log(renderized);
     for (let i = 0; i < path.length; ++i) {
       for (let j = 0; j < totalNodes; ++j) {
         if (renderized.nodes[j].id == path[i]) {
-          console.log(renderized.nodes[j].id);
           if (i == 0) {
             renderized.nodes[j]["color"] = "#477b4b";
           } else if (i == path.length - 1) {
@@ -199,7 +202,6 @@ function Home() {
         }
       }
     }
-    console.log(renderized);
     console.log(path);
     setRenderizedGraph(null);
     setTimeout(() => {
@@ -236,7 +238,7 @@ function Home() {
                   </SubTextInstructions>
                 ) : (
                   <SubTextInstructions>
-                    Agora selecione um vértice de destino (v ∈ G) ⇊
+                    Abaixo selecione um vértice de destino
                   </SubTextInstructions>
                 )}
                 <Form>
@@ -256,12 +258,14 @@ function Home() {
             </Conditional>
           ) : (
             <SubTextInstructions>
-              Primeiro renderize um dos grafos acima ⇈
+              Primeiro renderize um dos grafos acima
             </SubTextInstructions>
           )}
         </Menu>
         {renderizedGraph ? (
-          <Graph graph={renderizedGraph} options={options} events={events} />
+          <GraphContainer>
+            <Graph graph={renderizedGraph} options={options} events={events} />
+          </GraphContainer>
         ) : null}
       </Body>
       <Bottom>

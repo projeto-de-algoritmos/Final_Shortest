@@ -2,7 +2,21 @@
   "interaction": { 
     "multiselect": true,
     "hoverConnectedEdges": true,
+    "dragView": true,
     "selectConnectedEdges": false
+  },
+
+  "physics" : {
+    "enabled": true
+  },
+
+  "groups": { 
+    "myGroup" : { 
+      "color" : { 
+        "background" : "red" 
+      }, 
+      "borderWidth" : 3 
+    } 
   },
 
   "autoResize": true,
