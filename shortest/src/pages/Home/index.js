@@ -24,6 +24,7 @@ const graph = new GraphStructure();
 function Home() {
   const [renderizedGraph, setRenderizedGraph] = useState(null);
   const [totalNodes, setTotalNodes] = useState(0);
+  const [input, setInput] = useState("");
   const [destinyInput, setDestinyInput] = useState("");
   const [clickedVertex, setClickedVertex] = useState("");
   const [path, setPath] = useState([]);
@@ -41,14 +42,15 @@ function Home() {
       if (
         nodes.length == 0 ||
         destinyInput == "" ||
-        !graph.getVertex().hasOwnProperty(destinyInput)
+        !graph.getVertex().hasOwnProperty(destinyInput) ||
+        !applied
       ) {
-        console.log(nodes);
+        console.log(destinyInput);
         return;
       }
       // alert("test");
+      console.log(graph.memoization);
       if (destinyInput && nodes[0]) {
-        graph.shortestPath(destinyInput); // acha todas as soluções pro nó passado
         let response = graph.findSolution(nodes[0], destinyInput);
         if (response == -1) {
           alert("Não existe caminho!");
@@ -84,11 +86,13 @@ function Home() {
       setDestinyInput("");
       return;
     }
+    setLastValid(destinyInput);
 
     let new_renderized = renderGraph(example, 0);
     let index;
     let currentNode = destinyInput;
 
+    graph.shortestPath(destinyInput); // acha todas as soluções pro nó passado
     // achando o nó escolhido pelo usuario e mudando a cor dele no grafo
     for (let i = 0; i < new_renderized.nodes.length; ++i) {
       if (new_renderized.nodes[i].id === currentNode) {
@@ -137,6 +141,7 @@ function Home() {
     }
     if (id == 0) {
       console.log("criar grafo aleatorio");
+      setRenderizedGraph(null);
     } else if (id == 1) {
       graph.clear(); // zerando a estrutura
 
@@ -250,9 +255,9 @@ function Home() {
                   <Input
                     value={destinyInput}
                     required
-                    onChange={(destinyInput) =>
-                      setDestinyInput(destinyInput.target.value)
-                    }
+                    onChange={(input) => {
+                      setDestinyInput(input.target.value);
+                    }}
                     placeholder="Vértice Destino"
                   />
                 </Form>
