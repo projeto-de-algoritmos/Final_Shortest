@@ -24,6 +24,7 @@ const graph = new GraphStructure();
 var renderWithNodeDestiny = null;
 
 function Home() {
+  const [network, setNetwork] = useState({});
   const [standart, setStandart] = useState(null);
   const [renderizedGraph, setRenderizedGraph] = useState(null);
   const [totalNodes, setTotalNodes] = useState(0);
@@ -44,8 +45,6 @@ function Home() {
         console.log(nodes);
         return;
       }
-      setClickedVertex(nodes[0]);
-      ApplyButton();
       // alert("test");
       if (destinyInput && nodes[0]) {
         let response = graph.shortestPath(nodes[0], destinyInput);
@@ -54,6 +53,8 @@ function Home() {
         } else if (response == -2) {
           alert("Origem e destino iguais! Custo = 0");
         } else {
+          setClickedVertex(nodes[0]);
+          ApplyButton();
           setPath(response.path);
           setCost(response.cost);
           drawPath(response.path);
@@ -90,7 +91,7 @@ function Home() {
         index = i;
       }
     }
-    new_renderized.nodes[index]["color"] = "#6e3f6a";
+    new_renderized.nodes[index]["color"] = "#91c095";
 
     // renderizando com a cor alterada
     renderize(new_renderized, 25);
@@ -129,8 +130,6 @@ function Home() {
   function renderGraph(id) {
     if (id == 0) {
       console.log("criar grafo aleatorio");
-      console.log(renderWithNodeDestiny);
-      console.log(renderizedGraph);
     } else if (id == 1) {
       graph.clear(); // zerando a estrutura
 
@@ -182,11 +181,11 @@ function Home() {
       for (let j = 0; j < totalNodes; ++j) {
         if (renderized.nodes[j].id == path[i]) {
           if (i == 0) {
-            renderized.nodes[j]["color"] = "#477b4b";
+            renderized.nodes[j]["color"] = "#a4609e";
           } else if (i == path.length - 1) {
-            renderized.nodes[j]["color"] = "#6e3f6a";
-          } else {
             renderized.nodes[j]["color"] = "#91c095";
+          } else {
+            renderized.nodes[j]["color"] = "#a4609e";
           }
         }
       }
@@ -198,7 +197,7 @@ function Home() {
           renderized.edges[edge].from == path[i] &&
           renderized.edges[edge].to == path[i + 1]
         ) {
-          renderized.edges[edge]["color"] = "#91c095";
+          renderized.edges[edge]["color"] = "#a4609e";
         }
       }
     }
@@ -264,7 +263,14 @@ function Home() {
         </Menu>
         {renderizedGraph ? (
           <GraphContainer>
-            <Graph graph={renderizedGraph} options={options} events={events} />
+            <Graph
+              getNetwork={(network) => {
+                console.log(network);
+              }}
+              graph={renderizedGraph}
+              options={options}
+              events={events}
+            />
           </GraphContainer>
         ) : null}
       </Body>

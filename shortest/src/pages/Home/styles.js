@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { darken } from "polished";
 export const Container = styled.div`
   height: 100%;
-  background: linear-gradient(-90deg, #fff, #000);
+  background: linear-gradient(-90deg, #c9c9c9, #000);
   display: flex;
   justify-content: center;
   align-items: center;
