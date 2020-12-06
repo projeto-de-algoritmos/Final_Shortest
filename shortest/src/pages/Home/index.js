@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "@rocketseat/unform";
 import Graph from "react-graph-vis";
+import Picker from "react-picker";
 import {
   Container,
   Header,
@@ -56,6 +57,8 @@ function Home() {
           alert("Não existe caminho!");
         } else if (response == -2) {
           alert("Origem e destino iguais! Custo = 0");
+          ApplyButton();
+          setCost(0);
         } else {
           setClickedVertex(nodes[0]);
           ApplyButton();
@@ -79,6 +82,7 @@ function Home() {
       return;
     }
     setApplied(true);
+
     if (!graph.getVertex().hasOwnProperty(destinyInput)) {
       let response = "Vertice '" + destinyInput + "' não existente!";
       alert(response);
