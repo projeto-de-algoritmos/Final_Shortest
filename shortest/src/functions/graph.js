@@ -58,7 +58,7 @@ export default class Graph {
     this.solutionSet = {};
   }
 
-  shortestPath(origin, destiny) {
+  shortestPath(destiny) {
     // iniciar com infinito e zerar somente a coluna do nó destiny
 
     for (let i = 0; i < this.totalNodes; ++i) {
@@ -100,9 +100,9 @@ export default class Graph {
       }
     }
     // ----------------------------------------------------------- //
-
-    // find solution
-
+  }
+  // find solution
+  findSolution(origin, destiny) {
     for (let vertex in this.vertexs) {
       let aux = this.memoization[this.totalNodes - 1][vertex]; // salvando o valor do vertex atual na ultima iteração e salvando em aux
       if (aux == Number.MAX_SAFE_INTEGER) {

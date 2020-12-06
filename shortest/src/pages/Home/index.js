@@ -21,11 +21,7 @@ import exampleTwo from "../../jsons/example2.json";
 import GraphStructure from "../../functions/graph";
 
 const graph = new GraphStructure();
-var renderWithNodeDestiny = null;
-
 function Home() {
-  const [network, setNetwork] = useState({});
-  const [standart, setStandart] = useState(null);
   const [renderizedGraph, setRenderizedGraph] = useState(null);
   const [totalNodes, setTotalNodes] = useState(0);
   const [destinyInput, setDestinyInput] = useState("");
@@ -34,20 +30,26 @@ function Home() {
   const [cost, setCost] = useState(0);
   const [example, setExample] = useState(0);
   const [applied, setApplied] = useState(false);
+  const [lastValid, setLastValid] = useState("");
 
   const events = {
     // função que captura os nós selecionados pelo usuario
     select: function (event) {
       var { nodes, edges } = event;
 
-      // adiciona os nos e arestas selecionados no state
-      if (nodes.length == 0 || destinyInput == "") {
+      // se nao tiver vertice selecionado ou o input vazio, retorna
+      if (
+        nodes.length == 0 ||
+        destinyInput == "" ||
+        !graph.getVertex().hasOwnProperty(destinyInput)
+      ) {
         console.log(nodes);
         return;
       }
       // alert("test");
       if (destinyInput && nodes[0]) {
-        let response = graph.shortestPath(nodes[0], destinyInput);
+        graph.shortestPath(destinyInput); // acha todas as soluções pro nó passado
+        let response = graph.findSolution(nodes[0], destinyInput);
         if (response == -1) {
           alert("Não existe caminho!");
         } else if (response == -2) {
@@ -76,12 +78,14 @@ function Home() {
     }
     setApplied(true);
     if (!graph.getVertex().hasOwnProperty(destinyInput)) {
-      alert("Vértice não existente!");
+      let response = "Vertice '" + destinyInput + "' não existente!";
+      alert(response);
       setApplied(false);
+      setDestinyInput("");
       return;
     }
-    // renderize(converter(), 15);
-    let new_renderized = renderGraph(example);
+
+    let new_renderized = renderGraph(example, 0);
     let index;
     let currentNode = destinyInput;
 
@@ -95,7 +99,6 @@ function Home() {
 
     // renderizando com a cor alterada
     renderize(new_renderized, 25);
-    renderWithNodeDestiny = new_renderized;
     return new_renderized;
   }
   function converter() {
@@ -127,7 +130,11 @@ function Home() {
     };
   }
 
-  function renderGraph(id) {
+  function renderGraph(id, is_user) {
+    if (is_user) {
+      setApplied(false);
+      setDestinyInput("");
+    }
     if (id == 0) {
       console.log("criar grafo aleatorio");
     } else if (id == 1) {
@@ -144,7 +151,6 @@ function Home() {
       // renderizando na tela
       let new_renderized = converter();
 
-      setStandart(new_renderized);
       setRenderizedGraph(null);
       setExample(id);
       setTotalNodes(graph.getTotalVertex());
@@ -176,7 +182,7 @@ function Home() {
   }
 
   function drawPath(path) {
-    let renderized = renderWithNodeDestiny;
+    let renderized = ApplyButton(example);
     for (let i = 0; i < path.length; ++i) {
       for (let j = 0; j < totalNodes; ++j) {
         if (renderized.nodes[j].id == path[i]) {
@@ -216,14 +222,14 @@ function Home() {
       <Body>
         <Menu>
           <Text>Menu</Text>
-          <button id="0" onClick={(id) => renderGraph(id.target.id)}>
+          <button id="0" onClick={(id) => renderGraph(id.target.id, 1)}>
             Grafo Aleatório
           </button>
-          <button id="1" onClick={(id) => renderGraph(id.target.id)}>
+          <button id="1" onClick={(id) => renderGraph(id.target.id, 1)}>
             Exemplo 1 - Aula
           </button>
 
-          <button id="2" onClick={(id) => renderGraph(id.target.id)}>
+          <button id="2" onClick={(id) => renderGraph(id.target.id, 1)}>
             Exemplo 2 - Aula
           </button>
 
@@ -263,14 +269,7 @@ function Home() {
         </Menu>
         {renderizedGraph ? (
           <GraphContainer>
-            <Graph
-              getNetwork={(network) => {
-                console.log(network);
-              }}
-              graph={renderizedGraph}
-              options={options}
-              events={events}
-            />
+            <Graph graph={renderizedGraph} options={options} events={events} />
           </GraphContainer>
         ) : null}
       </Body>
