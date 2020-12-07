@@ -98,6 +98,8 @@ export default class Graph {
         }
       }
     }
+
+    return this.memoization;
     // ----------------------------------------------------------- //
   }
   // find solution
@@ -142,9 +144,6 @@ export default class Graph {
       path: path,
       cost: this.memoization[this.solutionSet[origin]][origin],
     };
-
-    console.log("memoization", this.memoization);
-    console.log("solutionset", this.solutionSet);
     return response;
   }
 }

@@ -25,14 +25,13 @@ const graph = new GraphStructure();
 function Home() {
   const [renderizedGraph, setRenderizedGraph] = useState(null);
   const [totalNodes, setTotalNodes] = useState(0);
-  const [input, setInput] = useState("");
   const [destinyInput, setDestinyInput] = useState("");
-  const [clickedVertex, setClickedVertex] = useState("");
   const [path, setPath] = useState([]);
   const [cost, setCost] = useState(0);
   const [example, setExample] = useState(0);
   const [applied, setApplied] = useState(false);
   const [lastValid, setLastValid] = useState("");
+  const [memoization, setMemoization] = useState("");
 
   const events = {
     // função que captura os nós selecionados pelo usuario
@@ -59,7 +58,6 @@ function Home() {
           ApplyButton();
           setCost(0);
         } else {
-          setClickedVertex(nodes[0]);
           ApplyButton();
           setPath(response.path);
           setCost(response.cost);
@@ -75,7 +73,7 @@ function Home() {
     }, time);
   }
 
-  function ApplyButton() {
+  function ApplyButton(is_user) {
     if (destinyInput == "") {
       alert("Insira um vértice no campo 'Vértice Destino'");
       return;
@@ -94,8 +92,12 @@ function Home() {
     let new_renderized = renderGraph(example, 0);
     let index;
     let currentNode = destinyInput;
+    //if (is_user === 1) {
+    // acha todas as soluções pro nó passado
 
-    graph.shortestPath(destinyInput); // acha todas as soluções pro nó passado
+    graph.shortestPath(destinyInput);
+    if (is_user === 1) console.log(graph.memoization);
+    //}
     // achando o nó escolhido pelo usuario e mudando a cor dele no grafo
     for (let i = 0; i < new_renderized.nodes.length; ++i) {
       if (new_renderized.nodes[i].id === currentNode) {
@@ -158,9 +160,7 @@ function Home() {
       setRenderizedGraph(null);
       setExample(id);
       setTotalNodes(graph.getTotalVertex());
-      setTimeout(() => {
-        setRenderizedGraph(new_renderized);
-      }, 50);
+      renderize(new_renderized, 50);
 
       return new_renderized;
     } else if (id == 1) {
@@ -180,9 +180,7 @@ function Home() {
       setRenderizedGraph(null);
       setExample(id);
       setTotalNodes(graph.getTotalVertex());
-      setTimeout(() => {
-        setRenderizedGraph(new_renderized);
-      }, 50);
+      renderize(new_renderized, 50);
 
       return new_renderized;
     } else if (id == 2) {
@@ -200,9 +198,8 @@ function Home() {
       setRenderizedGraph(null);
       setExample(id);
       setTotalNodes(graph.getTotalVertex());
-      setTimeout(() => {
-        setRenderizedGraph(new_renderized);
-      }, 50);
+      renderize(new_renderized, 50);
+
       return new_renderized;
     }
   }
@@ -282,7 +279,7 @@ function Home() {
                     placeholder="Vértice Destino"
                   />
                 </Form>
-                <button type="submit" onClick={ApplyButton}>
+                <button type="submit" onClick={() => ApplyButton(1)}>
                   Aplicar
                 </button>
               </FormContainer>
