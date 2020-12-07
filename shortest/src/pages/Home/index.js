@@ -47,8 +47,6 @@ function Home() {
       ) {
         return;
       }
-      // alert("test");
-      // console.log(graph.memoization);
       if (destinyInput && nodes[0]) {
         let response = graph.findSolution(nodes[0], destinyInput);
         if (response == -1) {
@@ -96,7 +94,7 @@ function Home() {
     // acha todas as soluções pro nó passado
 
     graph.shortestPath(destinyInput);
-    if (is_user === 1) console.log(graph.memoization);
+    if (is_user === 1) console.log('memoization', graph.memoization);
     //}
     // achando o nó escolhido pelo usuario e mudando a cor dele no grafo
     for (let i = 0; i < new_renderized.nodes.length; ++i) {
@@ -146,7 +144,6 @@ function Home() {
       setCost(0);
     }
     if (id == 0) {
-      // console.log("criar grafo aleatorio");
       graph.clear(); // zerando a estrutura
 
       for (let vertex of random.nodes) {
