@@ -19,13 +19,12 @@ O projeto pode ser acessado no link abaixo:
 O projeto é basicamente um visualizador interativo de menor caminho em grafos, com arestas de pesos positivos e negativos, utilizando o algoritmo de Bellman Ford. Três modelos de grafos estão disponíveis: Aleatório, Exemplo 1 e Exemplo 2.
 
 
-## Vídeo
-O vídeo está disponível no link abaixo:
+## Vídeo Explicativo
+Disponível no link abaixo:
 
-    youtube.com/
+[https://www.youtube.com/watch?v=l9lGU0iasuY](https://www.youtube.com/watch?v=l9lGU0iasuY)
 
 
-E também na pasta vídeo do projeto.
 ## Screenshots
 <br>
 
@@ -44,6 +43,10 @@ Exemplo 1
 Exemplo 2
 
 ![example 1](./screenshots/example2.png)
+
+Erro 1 ( Ao clicar no vértice 'C')
+
+![example 1](./screenshots/error1.png)
 
 ## Instalação
 
