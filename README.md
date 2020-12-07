@@ -11,11 +11,11 @@
 
 ## Sobre
 
-O projeto pode ser acessado no link abaixo:
+O projeto pode ser acessado no link abaixo: <br>
+   
+   [https://projeto-de-algoritmos.github.io/Final_Shortest/](https://projeto-de-algoritmos.github.io/Final_Shortest/)
 
-    https://projeto-de-algoritmos.github.io/Final_Shortest/
-
-Descreva os objetivos do seu projeto e como ele funciona.
+O projeto é basicamente um visualizador interativo de menor caminho em grafos, com arestas de pesos positivos e negativos, utilizando o algoritmo de Bellman Ford. Três modelos de grafos estão disponíveis: Aleatório, Exemplo 1 e Exemplo 2.
 
 ## Vídeo
 O vídeo está disponível no link abaixo:
