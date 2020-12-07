@@ -141,6 +141,7 @@ function Home() {
     if (is_user) {
       setApplied(false);
       setDestinyInput("");
+      setCost(0);
     }
     if (id == 0) {
       // console.log("criar grafo aleatorio");
