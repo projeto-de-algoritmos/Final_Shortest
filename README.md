@@ -12,10 +12,8 @@
 ## Sobre
 
 O projeto pode ser acessado no link abaixo: <br>
-   
-   [https://projeto-de-algoritmos.github.io/Final_Shortest/](https://projeto-de-algoritmos.github.io/Final_Shortest/)
+    [https://projeto-de-algoritmos.github.io/Final_Shortest/](https://projeto-de-algoritmos.github.io/Final_Shortest/)
 
-O projeto é basicamente um visualizador interativo de menor caminho em grafos, com arestas de pesos positivos e negativos, utilizando o algoritmo de Bellman Ford. Três modelos de grafos estão disponíveis: Aleatório, Exemplo 1 e Exemplo 2.
 
 ## Vídeo
 O vídeo está disponível no link abaixo:
@@ -25,8 +23,23 @@ O vídeo está disponível no link abaixo:
 
 E também na pasta vídeo do projeto.
 ## Screenshots
+<br>
 
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+Grafo Aleatório
+
+![random graph](./screenshots/random.png)
+
+Nó início: 'b' nó destino: 'm' 
+
+![random graph b to m](./screenshots/random-b-to-m.png)
+
+Exemplo 1 
+
+![example 1](./screenshots/example1.png)
+
+Exemplo 2
+
+![example 1](./screenshots/example2.png)
 
 ## Instalação
 
@@ -38,17 +51,17 @@ Primeiramente utilizaremos a ferramenta [git](https://git-scm.com/downloads) que
 
     $ git clone https://github.com/projeto-de-algoritmos/Final_Shortest
 
-Após clonar o repositório, é preciso acessar a pasta raiz do projeto:
+Após clonar o repositório, é preciso acessar a pasta 'shortest' do projeto:
 
     Exemplo para o linux:
 
-    $ cd Final_Shortest
+    $ cd Final_Shortest/shortest
 
 Para rodar o projeto é necessário ter instalado o [yarn](https://classic.yarnpkg.com/pt-BR/docs/install/#debian-stable) na versão estável mais atual.
 
 Após instalar o yarn, vamos instalar as dependências do projeto.
 
-    Na pasta raiz, execute:
+    Na pasta 'shortest', execute:
 
     $ yarn install
 
@@ -58,17 +71,17 @@ Depois, subir o servidor:
 
 E então acessar no navegador:
 
-    http://localhost:3000/
+    http://localhost:3000/Final_Shortest
 
 
 
 ## Uso
 
-A tela inicial aparece então é necessário escolher uma das três opções existentes de grafos (grafo aleatório, exemplo aula 1 ou exemplo aula 2).
+1 - A tela inicial aparece então é necessário escolher uma das três opções existentes de grafos. 
 
-Após isso digite o nó final(destino) e aperte em aplicar.
+2 - Após isso digite o nó final(destino) e aperte em aplicar.
 
-Aplicado é só escolher um nó no grafo gerado ao lado e é mostrado o menor caminho.
+3 - Aplicado é só escolher um nó no grafo gerado ao lado e é mostrado o menor caminho.
 ## Outros
 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+No console do navegador é possível ver o memoization da solução.
