@@ -46,7 +46,7 @@ Exemplo 2
 
 Erro 1 ( Ao clicar no vértice 'C')
 
-![example 1](./screenshots/error1.png)
+![example 1](./screenshots/error1.PNG)
 
 ## Instalação
 
